@@ -3,52 +3,69 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Etkinlik Yönetim Sistemi - Ana Sayfa</title>
-    <link rel="stylesheet" href="style.css">
-    <link rel="icon" type="image/x-icon" href="favicon.ico">
+    <title>Ana Sayfa - Benim Blog Sitem</title>
+    <link rel="stylesheet" href="styles.css">
 </head>
 <body>
     <header>
-        <h1>Etkinlik Yönetim Sistemi</h1>
-        <nav>
-            <ul>
-                <li><a href="index.html">Ana Sayfa</a></li>
-                <li><a href="events.html">Etkinlikler</a></li>
-                <li><a href="registration.html">Kayıt</a></li>
-                <li><a href="contact.html">İletişim</a></li>
-            </ul>
-        </nav>
+        <div class="container">
+            <h1>Benim Blog Sitem</h1>
+            <nav>
+                <ul>
+                    <li><a href="index.html">Ana Sayfa</a></li>
+                    <li><a href="about.html">Hakkımda</a></li>
+                    <li><a href="blog.html">Blog</a></li>
+                    <li><a href="contact.html">İletişim</a></li>
+                </ul>
+            </nav>
+        </div>
     </header>
 
-    <main>
-        <h2>Hoş Geldiniz!</h2>
-        <p>Etkinlik Yönetim Sistemimize hoş geldiniz. Burada en güncel etkinlikleri bulabilir ve kayıt olabilirsiniz.</p>
-        
-        <h3>Öne Çıkan Etkinlikler</h3>
-        <div class="featured-events">
-            <figure>
-                <a href="tech-conference.html">
-                    <img src="event1.jpg" alt="Tech Konferansı 2024" width="300">
-                    <figcaption>Tech Konferansı 2024</figcaption>
-                </a>
-            </figure>
-            <figure>
-                <a href="ai-summit.html">
-                    <img src="event2.jpg" alt="Yapay Zeka Zirvesi" width="300">
-                    <figcaption>Yapay Zeka Zirvesi</figcaption>
-                </a>
-            </figure>
-            <figure>
-                <a href="web-dev-workshop.html">
-                    <img src="event3.jpg" alt="Web Geliştirme Workshop" width="300">
-                    <figcaption>Web Geliştirme Workshop</figcaption>
-                </a>
-            </figure>
-        </div>
-    </main>
+    <div class="container main-content">
+        <main>
+            <h2>Son Yazılar</h2>
+            <div class="blog-grid">
+                <article class="blog-card">
+                    <img src="images/html5.jpg" alt="HTML5 Logo">
+                    <h3><a href="blog-post1.html">HTML5'in Yeni Özellikleri</a></h3>
+                    <p>HTML5 ile gelen yeni etiketler ve özellikleri keşfedin.</p>
+                    <a href="blog-post1.html" class="read-more">Devamını Oku</a>
+                </article>
+                <article class="blog-card">
+                    <img src="images/css3.jpg" alt="CSS3 Logo">
+                    <h3><a href="blog-post2.html">CSS3 İle Etkileyici Animasyonlar</a></h3>
+                    <p>CSS3 kullanarak web sayfalarınıza nasıl hareket katabileceğinizi öğrenin.</p>
+                    <a href="blog-post2.html" class="read-more">Devamını Oku</a>
+                </article>
+                <article class="blog-card">
+                    <img src="images/javascript.jpg" alt="JavaScript Logo">
+                    <h3><a href="blog-post3.html">JavaScript Temelleri</a></h3>
+                    <p>JavaScript'in temel kavramlarını ve web sayfalarınızı nasıl interaktif hale getirebileceğinizi öğrenin.</p>
+                    <a href="blog-post3.html" class="read-more">Devamını Oku</a>
+                </article>
+            </div>
+        </main>
+        <aside>
+            <h3>Kategoriler</h3>
+            <ul class="categories">
+                <li><a href="category-html.html">HTML</a></li>
+                <li><a href="category-css.html">CSS</a></li>
+                <li><a href="category-javascript.html">JavaScript</a></li>
+                <li><a href="category-web-design.html">Web Tasarımı</a></li>
+            </ul>
+        </aside>
+    </div>
+</html>
 
     <footer>
-        <p>&copy; 2024 Etkinlik Yönetim Sistemi. Tüm hakları saklıdır.</p>
+        <p>&copy; 2024 Benim Blog Sitem. Tüm hakları saklıdır.</p>
+        <nav>
+            <ul>
+                <li><a href="privacy.html" title="Gizlilik Politikası">Gizlilik Politikası</a></li>
+                <li><a href="https://facebook.com" title="Facebook sayfamız">Facebook</a></li>
+                <li><a href="https://x.com" title="Twitter hesabımız">Twitter</a></li>
+            </ul>
+        </nav>
     </footer>
 </body>
 </html>

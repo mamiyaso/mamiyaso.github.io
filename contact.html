@@ -3,54 +3,59 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>İletişim - Etkinlik Yönetim Sistemi</title>
-    <link rel="stylesheet" href="style.css">
-    <link rel="icon" type="image/x-icon" href="favicon.ico">
+    <title>İletişim - Benim Blog Sitem</title>
+    <link rel="stylesheet" href="styles.css">
 </head>
 <body>
     <header>
-        <h1>Etkinlik Yönetim Sistemi</h1>
-        <nav>
-            <ul>
-                <li><a href="index.html">Ana Sayfa</a></li>
-                <li><a href="events.html">Etkinlikler</a></li>
-                <li><a href="registration.html">Kayıt</a></li>
-                <li><a href="contact.html">İletişim</a></li>
-            </ul>
-        </nav>
+        <div class="container">
+            <h1>Benim Blog Sitem</h1>
+            <nav>
+                <ul>
+                    <li><a href="index.html">Ana Sayfa</a></li>
+                    <li><a href="about.html">Hakkımda</a></li>
+                    <li><a href="blog.html">Blog</a></li>
+                    <li><a href="contact.html">İletişim</a></li>
+                </ul>
+            </nav>
+        </div>
     </header>
 
-    <main>
-        <h2>İletişim</h2>
-        <p>Bizimle iletişime geçmek için aşağıdaki bilgileri kullanabilirsiniz:</p>
-        
-        <h3>İletişim Bilgileri</h3>
-        <ul>
-            <li>Adres: Mareşal Fevzi Çakmak Mahallesi, Syadam Sokak  No:28, Güngören, İstanbul</li>
-            <li>Telefon: <a href="tel:+5013393447">0501 339 34 47</a></li>
-            <li>E-posta: <a href="mailto:info@mmyasocial.com">info@mmyasocial.com</a></li>
-        </ul>
-        
-        <h3>Bize Ulaşın</h3>
-        <form action="iletisim.php" method="post">
-            <label for="ad">Adınız:</label>
-            <input type="text" id="ad" name="ad" required><br><br>
-            
-            <label for="email">E-posta:</label>
-            <input type="email" id="email" name="email" required><br><br>
-            
-            <label for="konu">Konu:</label>
-            <input type="text" id="konu" name="konu" required><br><br>
-            
-            <label for="mesaj">Mesajınız:</label><br>
-            <textarea id="mesaj" name="mesaj" rows="4" cols="50" required></textarea><br><br>
-            
-            <input type="submit" value="Gönder">
-        </form>
-    </main>
+    <div class="container main-content">
+        <main>
+            <h2>İletişim</h2>
+            <form class="contact-form">
+                <label for="name">Adınız:</label>
+                <input type="text" id="name" name="name" required>
+
+                <label for="email">E-posta Adresiniz:</label>
+                <input type="email" id="email" name="email" required>
+
+                <label for="message">Mesajınız:</label>
+                <textarea id="message" name="message" required></textarea>
+
+                <button type="submit">Gönder</button>
+            </form>
+        </main>
+        <aside>
+            <h3>İletişim Bilgileri</h3>
+            <ul class="contact-info">
+                <li>E-posta: info@benimblogsitem.com</li>
+                <li>Telefon: +90 501 339 3447</li>
+                <li>Adres: Mareşal Çakmak Mahallesi, Saydam Sokak, No: 28, Güngören/İstanbul, Türkiye</li>
+            </ul>
+        </aside>
+    </div>
 
     <footer>
-        <p>&copy; 2024 Etkinlik Yönetim Sistemi. Tüm hakları saklıdır.</p>
+        <p>&copy; 2024 Benim Blog Sitem. Tüm hakları saklıdır.</p>
+        <nav>
+            <ul>
+                <li><a href="privacy.html" title="Gizlilik Politikası">Gizlilik Politikası</a></li>
+                <li><a href="https://facebook.com" title="Facebook sayfamız">Facebook</a></li>
+                <li><a href="https://x.com" title="Twitter hesabımız">Twitter</a></li>
+            </ul>
+        </nav>
     </footer>
 </body>
 </html>

@@ -1,0 +1,114 @@
+<!DOCTYPE html>
+<html lang="tr">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>JavaScript Temelleri - Benim Blog Sitem</title>
+    <link rel="stylesheet" href="styles.css">
+</head>
+<body>
+    <header>
+        <div class="container">
+            <h1>Benim Blog Sitem</h1>
+            <nav>
+                <ul>
+                    <li><a href="index.html">Ana Sayfa</a></li>
+                    <li><a href="about.html">Hakkımda</a></li>
+                    <li><a href="blog.html">Blog</a></li>
+                    <li><a href="contact.html">İletişim</a></li>
+                </ul>
+            </nav>
+        </div>
+    </header>
+
+    <main class="container">
+        <article class="blog-post">
+            <h2>JavaScript Temelleri</h2>
+            <img src="images/javascript.jpg" alt="JavaScript Logo" class="featured-image">
+            <div class="post-meta">
+                <span class="date">27 Temmuz 2024</span>
+                <span class="author">Yazar: Admin</span>
+            </div>
+            <div class="post-content">
+                <p>JavaScript, web geliştirmenin vazgeçilmez bir parçasıdır. Bu yazıda, JavaScript'in temel kavramlarını ve web sayfalarınızı nasıl interaktif hale getirebileceğinizi öğreneceksiniz.</p>
+                
+                <h3>1. Değişkenler ve Veri Tipleri</h3>
+                <p>JavaScript'te değişken tanımlamak için <code>let</code>, <code>const</code> veya <code>var</code> kullanılır. Temel veri tipleri arasında string, number, boolean, null ve undefined bulunur.</p>
+                <pre><code>
+let name = "Ahmet";
+const age = 30;
+var isStudent = false;
+                </code></pre>
+                
+                <h3>2. Fonksiyonlar</h3>
+                <p>Fonksiyonlar, kodu yeniden kullanılabilir bloklara ayırmanızı sağlar. İşte bir örnek:</p>
+                <pre><code>
+function greet(name) {
+    return `Merhaba, ${name}!`;
+}
+console.log(greet("Ayşe")); // "Merhaba, Ayşe!" yazdırır
+                </code></pre>
+                
+                <h3>3. Koşullu İfadeler</h3>
+                <p>if-else ifadeleri, kodunuzun belirli koşullara göre farklı davranmasını sağlar:</p>
+                <pre><code>
+let hour = new Date().getHours();
+if (hour < 12) {
+    console.log("Günaydın!");
+} else if (hour < 18) {
+    console.log("İyi günler!");
+} else {
+    console.log("İyi akşamlar!");
+}
+                </code></pre>
+                
+                <h3>4. Döngüler</h3>
+                <p>Döngüler, bir işlemi tekrar tekrar yapmanızı sağlar. En yaygın döngü türleri for ve while'dır:</p>
+                <pre><code>
+for (let i = 0; i < 5; i++) {
+    console.log(i);
+}
+
+let j = 0;
+while (j < 5) {
+    console.log(j);
+    j++;
+}
+                </code></pre>
+                
+                <h3>5. DOM Manipülasyonu</h3>
+                <p>JavaScript ile HTML elementlerini seçebilir, değiştirebilir ve yeni elementler ekleyebilirsiniz:</p>
+                <pre><code>
+let title = document.getElementById("title");
+title.innerHTML = "Yeni Başlık";
+
+let newParagraph = document.createElement("p");
+newParagraph.textContent = "Bu yeni bir paragraf.";
+document.body.appendChild(newParagraph);
+                </code></pre>
+                
+                <p>Bu temel kavramları öğrendikten sonra, JavaScript ile web sayfalarınızı daha interaktif ve dinamik hale getirebilirsiniz.</p>
+            </div>
+        </article>
+    </main>
+
+    <aside class="container">
+        <h3>Diğer Yazılar</h3>
+        <ul class="related-posts">
+            <li><a href="blog-post1.html">HTML5'in Yeni Özellikleri</a></li>
+            <li><a href="blog-post2.html">CSS3 İle Etkileyici Animasyonlar</a></li>
+        </ul>
+    </aside>
+
+    <footer>
+        <p>&copy; 2024 Benim Blog Sitem. Tüm hakları saklıdır.</p>
+        <nav>
+            <ul>
+                <li><a href="privacy.html" title="Gizlilik Politikası">Gizlilik Politikası</a></li>
+                <li><a href="https://facebook.com" title="Facebook sayfamız">Facebook</a></li>
+                <li><a href="https://x.com" title="Twitter hesabımız">Twitter</a></li>
+            </ul>
+        </nav>
+    </footer>
+</body>
+</html>
