@@ -1,0 +1,963 @@
+<!DOCTYPE html>
+<html lang="tr">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Muhammed Yasin Porduğan - Proje Portföyü</title>
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0-alpha1/dist/css/bootstrap.min.css" rel="stylesheet">
+    <link href="https://cdn.jsdelivr.net/npm/aos@2.3.4/dist/aos.css" rel="stylesheet">
+    <style>
+        :root {
+            --primary-color: #3498db;
+            --secondary-color: #2ecc71;
+            --bg-color: #90b2cf;
+            --text-color: #1d1351;
+            --card-bg: #f0f9fa;
+        }
+        .dark-mode {
+            --primary-color: #2980b9;
+            --secondary-color: #27ae60;
+            --bg-color: #2c3e50;
+            --text-color: #ecf0f1;
+            --card-bg: #34495e;
+        }
+        body {
+            font-family: 'Arial', sans-serif;
+            line-height: 1.6;
+            color: var(--text-color);
+            background-color: var(--bg-color);
+            transition: background-color 0.3s ease, color 0.3s ease;
+        }
+        .card {
+            background-color: var(--card-bg);
+            color: var(--text-color);
+            transition: background-color 0.3s ease, color 0.3s ease;
+        }
+        .jumbotron {
+            background-color: var(--primary-color);
+            color: white;
+            padding: 2rem 1rem;
+            margin-bottom: 2rem;
+            border-radius: .3rem;
+        }
+        .project-card {
+            background-color: var(--card-bg);
+            color: var(--text-color);
+            transition: all 0.3s ease;
+        }
+        .project-card .card-body {
+            background-color: var(--card-bg);
+            transition: background-color 0.3s ease;
+        }
+        .project-card.expanded {
+            position: fixed;
+            top: 50%;
+            left: 50%;
+            transform: translate(-50%, -50%);
+            z-index: 1001;
+            width: 80%;
+            max-width: 600px;
+            height: auto;
+            box-shadow: 0 0 20px rgba(0,0,0,0.2);
+        }
+        .project-card.blurred {
+            filter: blur(5px);
+            pointer-events: none;
+        }
+        .overlay {
+            display: none;
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background-color: rgba(0,0,0,0.5);
+            z-index: 999;
+        }
+        .section {
+            padding: 100px 0;
+        }
+        .navbar {
+            transition: background-color 0.3s ease;
+            background-color: var(--primary-color) !important;
+        }
+        .navbar-light .navbar-nav .nav-link {
+            color: white !important;
+        }
+        .navbar.scrolled {
+            background-color: var(--bg-color) !important;
+            box-shadow: 0 2px 4px rgba(0,0,0,.1);
+        }
+        .navbar.scrolled .navbar-nav .nav-link {
+            color: var(--text-color) !important;
+        }
+        .btn-primary {
+            background-color: var(--primary-color);
+            border-color: var(--primary-color);
+        }
+        .btn-secondary {
+            background-color: var(--secondary-color);
+            border-color: var(--secondary-color);
+        }
+        .list-group-item {
+            background-color: var(--card-bg);
+            color: var(--text-color);
+        }
+        .particle {
+            position: fixed;
+            border-radius: 50%;
+            background: white;
+            opacity: 0.8;
+            pointer-events: none;
+            animation: explode 0.8s ease-out forwards;
+        }
+        @keyframes explode {
+            0% {
+                transform: scale(0) translate(0, 0);
+            }
+            50% {
+                opacity: 1;
+            }
+            100% {
+                transform: scale(1) translate(var(--tx), var(--ty));
+                opacity: 0;
+            }
+        }
+        /* Sertifika görüntüleme için güncellenmiş stiller */
+        .certificate-image {
+            cursor: pointer;
+            float: right;
+        }
+        .certificate-modal {
+            display: none;
+            position: fixed;
+            z-index: 1000;
+            left: 0;
+            top: 0;
+            width: 100%;
+            height: 100%;
+            overflow: auto;
+            background-color: rgba(0,0,0,0.9);
+        }
+        .certificate-modal-content {
+            position: relative;
+            margin: auto;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            width: 90%;
+            height: 90%;
+            max-width: 800px;
+        }
+        .certificate-modal-content img {
+            max-width: 100%;
+            max-height: 100%;
+            object-fit: contain;
+        }
+        .close {
+            color: #f1f1f1;
+            position: absolute;
+            top: 15px;
+            right: 35px;
+            font-size: 40px;
+            font-weight: bold;
+            transition: 0.3s;
+        }
+        .close:hover,
+        .close:focus {
+            color: #bbb;
+            text-decoration: none;
+            cursor: pointer;
+        }
+        .list-group-item {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+        .skill-category {
+            margin-bottom: 30px;
+            text-align: center;
+        }
+        .skill-subcategory {
+            margin-bottom: 20px;
+            text-align: left;
+        }
+        .skill-item {
+            margin-bottom: 10px;
+            text-align: left;
+        }
+        .skill-name {
+            font-weight: bold;
+            margin-bottom: 5px;
+            .progress {
+            background-color: rgba(255, 255, 255, 0.1);
+        }
+        .progress-bar {
+            background-color: var(--primary-color);
+        }
+        }
+    </style>
+</head>
+<body>
+    <nav class="navbar navbar-expand-lg navbar-light fixed-top">
+        <div class="container">
+            <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNav" aria-controls="navbarNav" aria-expanded="false" aria-label="Toggle navigation">
+                <span class="navbar-toggler-icon"></span>
+            </button>
+            <div class="collapse navbar-collapse" id="navbarNav">
+                <ul class="navbar-nav ml-auto">
+                    <li class="nav-item">
+                        <a class="nav-link" href="#about" data-translate="about">Hakkımda</a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link" href="#projects" data-translate="projects">Projeler</a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link" href="#certificates" data-translate="certificates">Sertifikalar</a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link" href="#contact" data-translate="contact">İletişim</a>
+                    </li>
+                    <li class="nav-item">
+                        <select id="languageSelect" class="form-select">
+                            <option value="tr">Türkçe</option>
+                            <option value="en">English</option>
+                        </select>
+                    </li>
+                    <li class="nav-item">
+                        <button id="themeToggle" class="btn btn-outline-light">🌓</button>
+                    </li>
+                </ul>
+            </div>
+        </div>
+    </nav>
+
+    <div class="jumbotron text-center" id = "me"style="margin-top: 56px;">
+        <h1 class="display-4" data-aos="fade-up" data-translate="name">Muhammed Yasin Porduğan</h1>
+        <p class="lead" data-aos="fade-up" data-aos-delay="200" data-translate="title">Bilgisayar Programcılığı Öğrencisi ve Web Geliştirici</p>
+    </div>
+
+    <div class="container section" id="about">
+        <h2 class="text-center mb-4" data-aos="fade-up" data-translate="about">Hakkımda</h2>
+        <div class="row justify-content-center">
+            <div class="col-md-8" data-aos="fade-up" data-aos-delay="100">
+                <div class="card">
+                    <div class="card-body">
+                        <p data-translate="aboutP1">
+                            Merhaba! Ben Muhammed Yasin Porduğan. İstanbul Beykent Üniversitesi'nde Bilgisayar Programcılığı bölümünde okuyorum. Web geliştirme, mobil uygulama geliştirme ve oyun programlama konularında tutkulu bir öğrenciyim. Sürekli kendimi geliştiriyor ve yeni teknolojiler öğreniyorum.
+                        </p>
+                        <p data-translate="aboutP2">
+                            Şu anda bir e-ticaret şirketinde web fullstack ve mobil geliştirme alanlarında staj yapıyorum. Bu deneyim, teorik bilgilerimi pratik uygulamalara dönüştürmeme ve endüstri standartlarını öğrenmeme olanak sağlıyor.
+                        </p>
+                        <p data-translate="aboutP3">
+                            Geçmişte, kendi e-ticaret girişimimi kurdum ve yönettim. Bu deneyim, bana sadece teknik beceriler değil, aynı zamanda iş dünyası ve girişimcilik konularında da değerli içgörüler kazandırdı.
+                        </p>
+                        <p data-translate="aboutP4">
+                            Amacım, teknolojinin gücünü kullanarak insanların hayatını kolaylaştıran ve değer katan projeler geliştirmek. Sürekli öğrenmeye ve kendimi geliştirmeye olan tutkum, beni her zaman yeni zorluklara hazır tutuyor.
+                        </p>
+                        <p data-translate="aboutP5">
+                            Yeni teknolojiler öğrenmeye, zorlu projeler üzerinde çalışmaya ve yazılım geliştirme topluluğuna katkıda bulunmaya her zaman açığım. İşbirliği yapmaktan, fikirler paylaşmaktan ve yazılım dünyasındaki diğer tutkulu insanlarla tanışmaktan büyük keyif alıyorum.
+                        </p>
+                        <p data-translate="aboutP6">
+                            Şuan öğrendiğim teknolojiler: React Native, Angular, Kotlin, MongoDB
+                        </p>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <div class="container section" id="skills">
+        <h2 class="text-center mb-4" data-aos="fade-up" data-translate="skills">Yetkinliklerim</h2>
+        <div class="row justify-content-center">
+            <div class="col-md-8" data-aos="fade-up" data-aos-delay="100">
+                <div class="card">
+                    <div class="card-body">
+                        <div class="skill-category">
+                            <h3>Web development</h3>
+                            <div class="skill-subcategory">
+                                <h4>Frontend</h4>
+                                <div class="skill-item">
+                                    <div class="skill-name">HTML</div>
+                                    <div class="progress">
+                                        <div class="progress-bar" role="progressbar" style="width: 96%;" aria-valuenow="90" aria-valuemin="0" aria-valuemax="100"></div>
+                                    </div>
+                                </div>
+                                <div class="skill-item">
+                                    <div class="skill-name">CSS</div>
+                                    <div class="progress">
+                                        <div class="progress-bar" role="progressbar" style="width: 92%;" aria-valuenow="85" aria-valuemin="0" aria-valuemax="100"></div>
+                                    </div>
+                                </div>
+                                <div class="skill-item">
+                                    <div class="skill-name">JavaScript</div>
+                                    <div class="progress">
+                                        <div class="progress-bar" role="progressbar" style="width: 95%;" aria-valuenow="80" aria-valuemin="0" aria-valuemax="100"></div>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="skill-subcategory">
+                                <h4>Frontend Frameworks</h4>
+                                <div class="skill-item">
+                                    <div class="skill-name">React</div>
+                                    <div class="progress">
+                                        <div class="progress-bar" role="progressbar" style="width: 100%;" aria-valuenow="85" aria-valuemin="0" aria-valuemax="100"></div>
+                                    </div>
+                                </div>
+                                <div class="skill-item">
+                                    <div class="skill-name">Angular</div>
+                                    <div class="progress">
+                                        <div class="progress-bar" role="progressbar" style="width: 70%;" aria-valuenow="70" aria-valuemin="0" aria-valuemax="100"></div>
+                                    </div>
+                                </div>
+                                <div class="skill-item">
+                                    <div class="skill-name">Vue.js</div>
+                                    <div class="progress">
+                                        <div class="progress-bar" role="progressbar" style="width: 100%;" aria-valuenow="75" aria-valuemin="0" aria-valuemax="100"></div>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="skill-subcategory">
+                                <h4>Frontend Libraries</h4>
+                                <div class="skill-item">
+                                    <div class="skill-name">Bootstrap</div>
+                                    <div class="progress">
+                                        <div class="progress-bar" role="progressbar" style="width: 95%;" aria-valuenow="90" aria-valuemin="0" aria-valuemax="100"></div>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="skill-subcategory">
+                                <h4>Backend</h4>
+                                <div class="skill-item">
+                                    <div class="skill-name">Python</div>
+                                    <div class="progress">
+                                        <div class="progress-bar" role="progressbar" style="width: 100%;" aria-valuenow="80" aria-valuemin="0" aria-valuemax="100"></div>
+                                    </div>
+                                </div>
+                                <div class="skill-item">
+                                    <div class="skill-name">Java</div>
+                                    <div class="progress">
+                                        <div class="progress-bar" role="progressbar" style="width: 95%;" aria-valuenow="75" aria-valuemin="0" aria-valuemax="100"></div>
+                                    </div>
+                                </div>
+                                <div class="skill-item">
+                                    <div class="skill-name">C#</div>
+                                    <div class="progress">
+                                        <div class="progress-bar" role="progressbar" style="width: 100%;" aria-valuenow="85" aria-valuemin="0" aria-valuemax="100"></div>
+                                    </div>
+                                </div>
+                                <div class="skill-item">
+                                    <div class="skill-name">C</div>
+                                    <div class="progress">
+                                        <div class="progress-bar" role="progressbar" style="width: 85%;" aria-valuenow="70" aria-valuemin="0" aria-valuemax="100"></div>
+                                    </div>
+                                </div>
+                                <div class="skill-item">
+                                    <div class="skill-name">SQL</div>
+                                    <div class="progress">
+                                        <div class="progress-bar" role="progressbar" style="width: 84%;" aria-valuenow="85" aria-valuemin="0" aria-valuemax="100"></div>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="skill-subcategory">
+                                <h4>Databases</h4>
+                                <div class="skill-item">
+                                    <div class="skill-name">PostgreSQL</div>
+                                    <div class="progress">
+                                        <div class="progress-bar" role="progressbar" style="width: 85%;" aria-valuenow="80" aria-valuemin="0" aria-valuemax="100"></div>
+                                    </div>
+                                </div>
+                                <div class="skill-item">
+                                    <div class="skill-name">Firebase</div>
+                                    <div class="progress">
+                                        <div class="progress-bar" role="progressbar" style="width: 80%;" aria-valuenow="75" aria-valuemin="0" aria-valuemax="100"></div>
+                                    </div>
+                                </div>
+                                <div class="skill-item">
+                                    <div class="skill-name">MongoDB</div>
+                                    <div class="progress">
+                                        <div class="progress-bar" role="progressbar" style="width: 70%;" aria-valuenow="70" aria-valuemin="0" aria-valuemax="100"></div>
+                                    </div>
+                                </div>
+                                <div class="skill-item">
+                                    <div class="skill-name">MSSQL</div>
+                                    <div class="progress">
+                                        <div class="progress-bar" role="progressbar" style="width: 90%;" aria-valuenow="85" aria-valuemin="0" aria-valuemax="100"></div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="skill-category">
+                            <h3>Mobile development</h3>
+                            <div class="skill-subcategory">
+                                <h4>Native</h4>
+                                <div class="skill-item">
+                                    <div class="skill-name">Kotlin</div>
+                                    <div class="progress">
+                                        <div class="progress-bar" role="progressbar" style="width: 70%;" aria-valuenow="70" aria-valuemin="0" aria-valuemax="100"></div>
+                                    </div>
+                                </div>
+                                <div class="skill-item">
+                                    <div class="skill-name">Java</div>
+                                    <div class="progress">
+                                        <div class="progress-bar" role="progressbar" style="width: 95%;" aria-valuenow="75" aria-valuemin="0" aria-valuemax="100"></div>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="skill-subcategory">
+                                <h4>Cross-Platform</h4>
+                                <div class="skill-item">
+                                    <div class="skill-name">Dart</div>
+                                    <div class="progress">
+                                        <div class="progress-bar" role="progressbar" style="width: 95%;" aria-valuenow="80" aria-valuemin="0" aria-valuemax="100"></div>
+                                    </div>
+                                </div>
+                                <div class="skill-item">
+                                    <div class="skill-name">React Native</div>
+                                    <div class="progress">
+                                        <div class="progress-bar" role="progressbar" style="width: 75%;" aria-valuenow="75" aria-valuemin="0" aria-valuemax="100"></div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="skill-category">
+                            <h3>Game development</h3>
+                            <div class="skill-item">
+                                <div class="skill-name">Unity</div>
+                                <div class="progress">
+                                    <div class="progress-bar" role="progressbar" style="width: 95%;" aria-valuenow="70" aria-valuemin="0" aria-valuemax="100"></div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <div class="container section" id="projects">
+        <h2 class="text-center mb-4" data-aos="fade-up" data-translate="projects">Projelerim</h2>
+        <div class="row" id="projectContainer">
+            <div class="col-md-4 mb-4" data-aos="fade-up" data-aos-delay="100">
+                <div class="card project-card">
+                    <div class="card-body">
+                        <h5 class="card-title" data-translate="project1Title">Film Keşif Uygulaması</h5>
+                        <h6> React</h6>
+                        <p class="card-text" data-translate="project1Desc">The Movie Database API kullanarak popüler filmleri listeleyen, film arama ve favori ekleme özellikleri sunan web uygulaması.</p>
+                        <button class="btn btn-primary btn-sm expand-btn" data-project="project1" data-translate="expand">Genişlet</button>
+                    </div>
+                </div>
+            </div>
+            <div class="col-md-4 mb-4" data-aos="fade-up" data-aos-delay="200">
+                <div class="card project-card">
+                    <div class="card-body">
+                        <h5 class="card-title" data-translate="project2Title">E-Ticaret Web Uygulaması</h5>
+                        <h6>React</h6>
+                        <p class="card-text" data-translate="project2Desc">Kullanıcı hesabı, ürün listeleme, sepet yönetimi ve ödeme işlemleri sunan kapsamlı bir e-ticaret platformu.</p>
+                        <button class="btn btn-primary btn-sm expand-btn" data-project="project2" data-translate="expand">Genişlet</button>
+                    </div>
+                </div>
+            </div>
+            <div class="col-md-4 mb-4" data-aos="fade-up" data-aos-delay="300">
+                <div class="card project-card">
+                    <div class="card-body">
+                        <h5 class="card-title" data-translate="project3Title">BTK Akademi Mobil Uygulaması</h5>
+                        <h6>Flutter</h6>
+                        <p class="card-text" data-translate="project3Desc">BTK Akademi web sitesini mobil ortamda sunan WebView tabanlı uygulama.</p>
+                        <a href="https://github.com/mamiyaso/btkakademi" class="btn btn-secondary btn-sm" target="_blank" data-translate="github">GitHub</a>
+                        <button class="btn btn-primary btn-sm expand-btn" data-project="project3" data-translate="expand">Genişlet</button>
+                    </div>
+                </div>
+            </div>
+            <div class="col-md-4 mb-4" data-aos="fade-up" data-aos-delay="100">
+                <div class="card project-card">
+                    <div class="card-body">
+                        <h5 class="card-title" data-translate="project4Title">Otel Otomasyon Sistemi</h5>
+                        <h6">C#</h6>
+                        <p class="card-text" data-translate="project4Desc">Otel rezervasyon ve yönetim işlemlerini kolaylaştıran kapsamlı bir masaüstü uygulaması.</p>
+                        <a href="https://github.com/mamiyaso/OtelOtomasyon" class="btn btn-secondary btn-sm" target="_blank" data-translate="github">GitHub</a>
+                        <button class="btn btn-primary btn-sm expand-btn" data-project="project4" data-translate="expand">Genişlet</button>
+                    </div>
+                </div>
+            </div>
+            <div class="col-md-4 mb-4" data-aos="fade-up" data-aos-delay="200">
+                <div class="card project-card">
+                    <div class="card-body">
+                        <h5 class="card-title" data-translate="project5Title">Note Engineer</h5>
+                        <h6>Flutter</h6>
+                        <p class="card-text" data-translate="project5Desc">Çoklu platform desteği sunan gelişmiş not alma ve yönetme uygulaması.</p>
+                        <a href="https://github.com/mamiyaso/NoteEngineer" class="btn btn-secondary btn-sm" target="_blank" data-translate="github">GitHub</a>
+                        <button class="btn btn-primary btn-sm expand-btn" data-project="project5" data-translate="expand">Genişlet</button>
+                    </div>
+                </div>
+            </div>
+            <div class="col-md-4 mb-4" data-aos="fade-up" data-aos-delay="300">
+                <div class="card project-card">
+                    <div class="card-body">
+                        <h5 class="card-title" data-translate="project6Title">Zombie Survival</h5>
+                        <h6>Unity 3D</h6>
+                        <p class="card-text" data-translate="project6Desc">Karanlık platformlarda ilerleyerek zombileri öldürdüğümüz, dalga dalga zombilerin geldiği 3D aksiyon oyunu.</p>
+                        <button class="btn btn-primary btn-sm expand-btn" data-project="project6" data-translate="expand">Genişlet</button>
+                    </div>
+                </div>
+            </div>
+            <div class="col-md-4 mb-4" data-aos="fade-up" data-aos-delay="100">
+                <div class="card project-card">
+                    <div class="card-body">
+                        <h5 class="card-title" data-translate="project7Title">Market Otomasyon Sistemi</h5>
+                        <h6>C#</h6>
+                        <p class="card-text" data-translate="project7Desc">Ürün satışı, stok yönetimi ve raporlama özellikleri sunan masaüstü uygulaması.</p>
+                        <a href="https://github.com/mamiyaso/marketotomasyon" class="btn btn-secondary btn-sm" target="_blank" data-translate="github">GitHub</a>
+                        <button class="btn btn-primary btn-sm expand-btn" data-project="project7" data-translate="expand">Genişlet</button>
+                    </div>
+                </div>
+            </div>
+            <div class="col-md-4 mb-4" data-aos="fade-up" data-aos-delay="200">
+                <div class="card project-card">
+                    <div class="card-body">
+                        <h5 class="card-title" data-translate="project8Title">To-Do Uygulaması</h5>
+                        <h6>Vue.js</h6>
+                        <p class="card-text" data-translate="project8Desc">Görev yönetimi için geliştirilen web uygulaması.</p>
+                        <a href="https://github.com/mamiyaso/todo-app" class="btn btn-secondary btn-sm" target="_blank" data-translate="github">GitHub</a>
+                        <button class="btn btn-primary btn-sm expand-btn" data-project="project8" data-translate="expand">Genişlet</button>
+                    </div>
+                </div>
+            </div>
+            <div class="col-md-4 mb-4" data-aos="fade-up" data-aos-delay="300">
+                <div class="card project-card">
+                    <div class="card-body">
+                        <h5 class="card-title" data-translate="project9Title">Kitap Takip Uygulaması</h5>
+                        <h6>Vue.js</h6>
+                        <p class="card-text" data-translate="project9Desc">Kullanıcıların kitaplarını ve okuma durumlarını kaydetmelerine olanak sağlayan web uygulaması.</p>
+                        <a href="https://github.com/mamiyaso/book-tracking" class="btn btn-secondary btn-sm" target="_blank" data-translate="github">GitHub</a>
+                        <button class="btn btn-primary btn-sm expand-btn" data-project="project9" data-translate="expand">Genişlet</button>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <div class="container section" id="certificates">
+        <h2 class="text-center mb-4" data-aos="fade-up" data-translate="certificates">Sertifikalarım</h2>
+        <div class="row justify-content-center">
+            <div class="col-md-8">
+                <ul class="list-group" data-aos="fade-up" data-aos-delay="200">
+                    <li class="list-group-item">Ağ Temelleri - BTK Akademi <span class="certificate-image" data-image="sertifikalar/Ağ_Temelleri-1.jpg">👁️</span></li>
+                    <li class="list-group-item">JAVA ile Programlamaya Giriş - BTK Akademi <span class="certificate-image" data-image="sertifikalar/JAVA_ile_Programlamaya_Giriş-1.jpg">👁️</span></li>
+                    <li class="list-group-item">C Programlama Dili - BTK Akademi <span class="certificate-image" data-image="sertifikalar/C_Programlama_Dili-1.jpg">👁️</span></li>
+                    <li class="list-group-item">Google Flutter ile Mobil Uygulama - BTK Akademi <span class="certificate-image" data-image="sertifikalar/Google_Flutter_ile_Mobil_Uygulama-1.jpg">👁️</span></li>
+                    <li class="list-group-item">Unity ile Dijital Oyun Geliştirmeye Giriş - BTK Akademi <span class="certificate-image" data-image="sertifikalar/Unity_ile_Dijital_Oyun_Geliştirmeye_Giriş-1.jpg">👁️</span></li>
+                    <li class="list-group-item">Uygulamalarla SQL Öğreniyorum - BTK Akademi <span class="certificate-image" data-image="sertifikalar/Uygulamalarla_SQL_Öğreniyorum-1.jpg">👁️</span></li>
+                    <li class="list-group-item">Bootstrap 5 - BTK Akademi <span class="certificate-image" data-image="sertifikalar/Bootstrap_5-1.jpg">👁️</span></li>
+                    <li class="list-group-item">REACT ile Web Programcılığı - BTK Akademi <span class="certificate-image" data-image="sertifikalar/REACT_ile_Web_Programcılığı-1.jpg">👁️</span></li>
+                    <li class="list-group-item">HTML5 ile Web Geliştirme - BTK Akademi <span class="certificate-image" data-image="sertifikalar/HTML5_ile_Web_Geliştirme-1.jpg">👁️</span></li>
+                    <li class="list-group-item">Vue.JS - BTK Akademi <span class="certificate-image" data-image="sertifikalar/Vue.JS-1.jpg">👁️</span></li>
+                    <li class="list-group-item">CSS Temelleri - BTK Akademi <span class="certificate-image" data-image="sertifikalar/CSS_Temelleri-1.jpg">👁️</span></li>
+                    <li class="list-group-item">Javascript Temelleri - BTK Akademi <span class="certificate-image" data-image="sertifikalar/Javascript_Temelleri-1.jpg">👁️</span></li>
+                    <li class="list-group-item">Yeni Başlayanlar için Python Programlama - BTK Akademi <span class="certificate-image" data-image="sertifikalar/Yeni_Başlayanlar_için_Python_Programlama-1.jpg">👁️</span></li>
+                    <li class="list-group-item">C# Programlama - BTK Akademi <span class="certificate-image" data-image="sertifikalar/CSharp.jpg">👁️</span></li>
+                    <li class="list-group-item">Unity ile 3D Oyun Geliştirme - BTK Akademi <span class="certificate-image" data-image="sertifikalar/Unity_ile_3D_Oyun_Geliştirme-1.jpg">👁️</span></li>
+                    <li class="list-group-item">Dart Programlama Dili - BTK Akademi <span class="certificate-image" data-image="sertifikalar/Dart_Programlama_Dili-1.jpg">👁️</span></li>
+                </ul>
+            </div>
+        </div>
+    </div>
+    <!-- Sertifika Görüntüleme Modalı -->
+    <div id="certificateModal" class="certificate-modal">
+        <span class="close">&times;</span>
+        <div class="certificate-modal-content">
+            <img id="certificateImage" src="" alt="Sertifika">
+        </div>
+    </div>
+
+    <div class="container section" id="contact">
+        <h2 class="text-center mb-4" data-aos="fade-up" data-translate="contact">İletişim</h2>
+        <div class="row justify-content-center">
+            <div class="col-md-6">
+                <ul class="list-group" data-aos="fade-up" data-aos-delay="200">
+                    <li class="list-group-item">📧 Email: <span data-translate="email">mmyasocial@gmail.com</span></li>
+                    <li class="list-group-item">🌐 GitHub: <a href="https://github.com/mamiyaso" data-translate="github">github.com/mamiyaso</a></li>
+                    <li class="list-group-item">📍 <span data-translate="location">Konum: Güngören, İstanbul</span></li>
+                </ul>
+            </div>
+        </div>
+    </div>
+
+    <div class="overlay" id="overlay"></div>
+
+
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0-alpha1/dist/js/bootstrap.bundle.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/aos@2.3.4/dist/aos.js"></script>
+    <script>
+        AOS.init({
+            duration: 1000,
+            once: true,
+        });
+
+         // Sertifika görüntüleme için güncellenmiş kod
+         const certificateImages = document.querySelectorAll('.certificate-image');
+        const modal = document.getElementById('certificateModal');
+        const modalImg = document.getElementById('certificateImage');
+        const closeBtn = document.getElementsByClassName('close')[0];
+
+        certificateImages.forEach(img => {
+            img.addEventListener('click', function() {
+                modal.style.display = 'flex';
+                modalImg.src = this.getAttribute('data-image');
+            });
+        });
+
+        closeBtn.onclick = function() {
+            modal.style.display = 'none';
+        }
+
+        window.onclick = function(event) {
+            if (event.target == modal) {
+                modal.style.display = 'none';
+            }
+        }
+
+        // Çok dilli proje detayları
+        const projectDetails = {
+            tr: {
+                project1: {
+                    title: "Film Keşif Uygulaması",
+                    description: "Bu React tabanlı web uygulaması, The Movie Database API'sini kullanarak popüler filmleri listeler, kullanıcıların film araması yapmasına ve favori filmlerini kaydetmesine olanak tanır. Uygulama, modern bir arayüz ve akıcı bir kullanıcı deneyimi sunar."
+                },
+                project2: {
+                    title: "E-Ticaret Web Uygulaması",
+                    description: "React ile geliştirilen bu kapsamlı e-ticaret platformu, kullanıcı hesap yönetimi, ürün listeleme, sepet yönetimi ve ödeme işlemleri gibi temel e-ticaret özelliklerini içerir. Responsive tasarımı sayesinde hem masaüstü hem de mobil cihazlarda sorunsuz çalışır."
+                },
+                project3: {
+                    title: "BTK Akademi Mobil Uygulaması",
+                    description: "Flutter kullanılarak geliştirilen bu mobil uygulama, BTK Akademi'nin web sitesini WebView teknolojisiyle mobil ortama taşır. Kullanıcılar, BTK Akademi'nin sunduğu eğitim içeriklerine mobil cihazlarından kolayca erişebilir."
+                },
+                project4: {
+                    title: "Otel Otomasyon Sistemi",
+                    description: "C# ile geliştirilen bu masaüstü uygulaması, otellerin günlük operasyonlarını yönetmelerine yardımcı olur. Rezervasyon yönetimi, oda durumu takibi, müşteri bilgi yönetimi ve faturalama gibi temel otel yönetimi işlevlerini içerir."
+                },
+                project5: {
+                    title: "Note Engineer",
+                    description: "Dart programlama dili kullanılarak geliştirilen bu not alma uygulaması, çoklu platform desteği sunar. Kullanıcılar notlarını oluşturabilir, düzenleyebilir, kategorize edebilir ve senkronize edebilir. Uygulama, kullanıcı dostu arayüzü ve gelişmiş özellikleriyle öne çıkar."
+                },
+                project6: {
+                    title: "Zombie Survival",
+                    description: "Unity 3D ile geliştirilen bu aksiyon oyunu, oyuncuları karanlık ve tehlikeli bir dünyada hayatta kalmaya çalışırken zombilerle mücadele etmeye davet ediyor. Oyun özellikleri arasında duvarda koşma, tırmanma, zıplama, ileri atılma (dash) ve çeşitli silahlarla nişan alıp ateş etme bulunuyor. Dalga dalga gelen zombiler, oyuncuların reflekslerini ve stratejik düşünme yeteneklerini test ediyor."
+                },
+                project7: {
+                    title: "Market Otomasyon Sistemi",
+                    description: "C# Form kullanılarak geliştirilen bu masaüstü uygulaması, market ürün satışı, ürün stoğu takibi, günlük satışların bilgilerini ve z raporu sunan kapsamlı bir sistemdir. Küçük ve orta ölçekli marketler için ideal bir çözüm sunar."
+                },
+                project8: {
+                    title: "To-Do Uygulaması",
+                    description: "Vue.js kullanılarak geliştirilen bu web uygulaması, kullanıcıların günlük görevlerini yönetmelerine yardımcı olur. Görev ekleme, düzenleme, silme ve tamamlama gibi temel özellikler sunar."
+                },
+                project9: {
+                    title: "Kitap Takip Uygulaması",
+                    description: "Vue.js ile geliştirilen bu web uygulaması, kitap severler için tasarlanmıştır. Kullanıcılar, okudukları, okumakta oldukları ve okumayı planladıkları kitapları listeleyebilir, kitaplar hakkında notlar alabilir ve okuma ilerlemelerini takip edebilirler."
+                }
+            },
+            en: {
+                project1: {
+                    title: "Movie Discovery App",
+                    description: "This React-based web application uses The Movie Database API to list popular movies, allowing users to search for films and save their favorites. The app offers a modern interface and a smooth user experience."
+                },
+                project2: {
+                    title: "E-Commerce Web Application",
+                    description: "Developed with React, this comprehensive e-commerce platform includes core features such as user account management, product listing, cart management, and payment processing. Its responsive design ensures seamless operation on both desktop and mobile devices."
+                },
+                project3: {
+                    title: "BTK Academy Mobile App",
+                    description: "This mobile application, developed using Flutter, brings the BTK Academy website to mobile platforms using WebView technology. Users can easily access educational content provided by BTK Academy from their mobile devices."
+                },
+                project4: {
+                    title: "Hotel Management System",
+                    description: "This desktop application, developed in C#, helps hotels manage their daily operations. It includes key hotel management functions such as reservation management, room status tracking, customer information management, and billing."
+                },
+                project5: {
+                    title: "Note Engineer",
+                    description: "Developed using the Dart programming language, this note-taking application offers multi-platform support. Users can create, edit, categorize, and synchronize their notes. The application stands out with its user-friendly interface and advanced features."
+                },
+                project6: {
+                    title: "Zombie Survival",
+                    description: "This action game developed with Unity 3D invites players to fight zombies while trying to survive in a dark and dangerous world. Game features include wall running, climbing, jumping, dashing, and aiming and firing with various weapons. Waves of zombies test players' reflexes and strategic thinking skills."
+                },
+                project7: {
+                    title: "Market Automation System",
+                    description: "This desktop application, developed using C# Form, is a comprehensive system that offers product sales, inventory tracking, daily sales information, and Z reports for markets. It provides an ideal solution for small and medium-sized markets."
+                },
+                project8: {
+                    title: "To-Do Application",
+                    description: "This web application, developed using Vue.js, helps users manage their daily tasks. It offers basic features such as adding, editing, deleting, and completing tasks."
+                },
+                project9: {
+                    title: "Book Tracking Application",
+                    description: "Developed with Vue.js, this web application is designed for book lovers. Users can list books they have read, are currently reading, or plan to read, take notes about books, and track their reading progress."
+                }
+            }
+        };
+
+        // Kartların orijinal konumlarını saklamak için bir map
+        const originalPositions = new Map();
+
+        // Güncellenmiş proje genişletme/küçültme fonksiyonu
+        document.querySelectorAll('.expand-btn').forEach(button => {
+            button.addEventListener('click', function() {
+                const projectId = this.getAttribute('data-project');
+                const card = this.closest('.project-card');
+                const allCards = document.querySelectorAll('.project-card');
+                const overlay = document.getElementById('overlay');
+                
+                if (card.classList.contains('expanded')) {
+                    // Küçült
+                    card.classList.remove('expanded');
+                    allCards.forEach(c => c.classList.remove('blurred'));
+                    this.textContent = translations[currentLanguage].expand;
+                    card.querySelector('.card-text').textContent = translations[currentLanguage][projectId + 'Desc'];
+                    overlay.style.display = 'none';
+                    
+                    // Kartı orijinal konumuna geri getir
+                    const originalPosition = originalPositions.get(card);
+                    if (originalPosition.nextSibling) {
+                        originalPosition.parent.insertBefore(card, originalPosition.nextSibling);
+                    } else {
+                        originalPosition.parent.appendChild(card);
+                    }
+                } else {
+                    // Genişlet
+                    // Orijinal konumu sakla
+                    originalPositions.set(card, {
+                        parent: card.parentNode,
+                        nextSibling: card.nextSibling
+                    });
+
+                    card.classList.add('expanded');
+                    allCards.forEach(c => {
+                        if (c !== card) c.classList.add('blurred');
+                    });
+                    this.textContent = translations[currentLanguage].shrink;
+                    card.querySelector('.card-text').textContent = projectDetails[currentLanguage][projectId].description;
+                    overlay.style.display = 'block';
+                    
+                    // Kartı body'nin sonuna taşıyarak öne getir
+                    document.body.appendChild(card);
+                }
+            });
+        });
+
+        // Overlay'e tıklandığında tüm kartları küçült
+        document.getElementById('overlay').addEventListener('click', function() {
+            const expandedCard = document.querySelector('.project-card.expanded');
+            if (expandedCard) {
+                expandedCard.classList.remove('expanded');
+                document.querySelectorAll('.project-card').forEach(c => c.classList.remove('blurred'));
+                expandedCard.querySelector('.expand-btn').textContent = translations[currentLanguage].expand;
+                const projectId = expandedCard.querySelector('.expand-btn').getAttribute('data-project');
+                expandedCard.querySelector('.card-text').textContent = translations[currentLanguage][projectId + 'Desc'];
+                this.style.display = 'none';
+                
+                // Kartı orijinal konumuna geri getir
+                const originalPosition = originalPositions.get(expandedCard);
+                if (originalPosition.nextSibling) {
+                    originalPosition.parent.insertBefore(expandedCard, originalPosition.nextSibling);
+                } else {
+                    originalPosition.parent.appendChild(expandedCard);
+                }
+            }
+        });
+
+        // Smooth scrolling for anchor links
+        document.querySelectorAll('a[href^="#"]').forEach(anchor => {
+            anchor.addEventListener('click', function (e) {
+                e.preventDefault();
+                document.querySelector(this.getAttribute('href')).scrollIntoView({
+                    behavior: 'smooth'
+                });
+            });
+        });
+
+        // Change navbar background on scroll
+        window.addEventListener('scroll', function() {
+            if (window.scrollY > 50) {
+                document.querySelector('.navbar').classList.add('scrolled');
+            } else {
+                document.querySelector('.navbar').classList.remove('scrolled');
+            }
+        });
+
+        // Theme toggle
+        const themeToggle = document.getElementById('themeToggle');
+        themeToggle.addEventListener('click', () => {
+            document.body.classList.toggle('dark-mode');
+            updateProjectCardColors();
+            updateProgressBarColors();
+
+        });
+
+        // Proje kartlarının renklerini güncelleme fonksiyonu
+        function updateProjectCardColors() {
+            const isDarkMode = document.body.classList.contains('dark-mode');
+            const cards = document.querySelectorAll('.project-card');
+            cards.forEach(card => {
+                card.style.backgroundColor = isDarkMode ? '#34495e' : '#f8f9fa';
+                card.style.color = isDarkMode ? '#ecf0f1' : '#333333';
+            });
+        }
+
+        function updateProgressBarColors() {
+            const isDarkMode = document.body.classList.contains('dark-mode');
+            const progressBars = document.querySelectorAll('.progress-bar');
+            progressBars.forEach(bar => {
+                bar.style.backgroundColor = isDarkMode ? getComputedStyle(document.documentElement).getPropertyValue('--primary-color') : '';
+            });
+        }
+
+        // Language toggle
+        let currentLanguage = 'tr';
+        const languageSelect = document.getElementById('languageSelect');
+        const translations = {
+            en: {
+                title: "Computer Programming Student, Mobile and Web Developer",
+                about: "About Me",
+                skills: "Competencies",
+                projects: "My Projects",
+                certificates: "My Certificates",
+                contact: "Contact",
+                project1Title: "Movie Discovery App",
+                project1Desc: "A web application that lists popular movies, allows movie searches and adding favorites using The Movie Database API.",
+                project2Title: "E-Commerce Web Application",
+                project2Desc: "A comprehensive e-commerce platform offering user accounts, product listing, cart management, and payment processing.",
+                project3Title: "BTK Academy Mobile App",
+                project3Desc: "A WebView-based application that brings the BTK Academy website to mobile platforms.",
+                project4Title: "Hotel Management System",
+                project4Desc: "A comprehensive desktop application that facilitates hotel reservation and management operations.",
+                project5Title: "Note Engineer",
+                project5Desc: "An advanced note-taking and management application with multi-platform support.",
+                project6Title: "Zombie Survival",
+                project6Desc: "A 3D action game where you progress through dark platforms, killing zombies in waves.",
+                project7Title: "Market Automation System",
+                project7Desc: "A desktop application offering product sales, inventory management, and reporting features for markets.",
+                project8Title: "To-Do Application",
+                project8Desc: "A web application developed for task management.",
+                project9Title: "Book Tracking Application",
+                project9Desc: "A web application allowing users to record their books and reading status.",
+                expand: "Expand",
+                shrink: "Shrink",
+                details: "Details",
+                review: "Review",
+                github: "GitHub",
+                email: "mmyasocial@gmail.com",
+                location: "Location: Güngören, Istanbul",
+                aboutP1: "Hello! I'm Muhammed Yasin Porduğan. I'm studying Computer Programming at Istanbul Beykent University. I'm passionate about web development, mobile app development, and game programming. I'm constantly improving myself and learning new technologies.",
+                aboutP2: "Currently, I'm interning at an e-commerce company in web fullstack and mobile development areas. This experience allows me to transform my theoretical knowledge into practical applications and learn industry standards.",
+                aboutP3: "In the past, I founded and managed my own e-commerce venture. This experience gave me not only technical skills but also valuable insights into the business world and entrepreneurship.",
+                aboutP4: "My goal is to develop projects that make people's lives easier and add value using the power of technology. My passion for continuous learning and self-improvement always keeps me ready for new challenges.",
+                aboutP5: "I'm always open to learning new technologies, working on challenging projects, and contributing to the software development community. I greatly enjoy collaborating, sharing ideas, and meeting other passionate people in the software world.",
+                aboutP6: "Technologies I'm currently learning: React Native, Angular, Kotlin, MongoDB"
+            },
+            tr: {
+                title: "Bilgisayar Programcılığı Öğrencisi, Mobil ve Web Geliştiricisi",
+                about: "Hakkımda",
+                skills: "Yetkinliklerim",
+                projects: "Projelerim",
+                certificates: "Sertifikalarım",
+                contact: "İletişim",
+                project1Title: "Film Keşif Uygulaması",
+                project1Desc: "The Movie Database API kullanarak popüler filmleri listeleyen, film arama ve favori ekleme özellikleri sunan web uygulaması.",
+                project2Title: "E-Ticaret Web Uygulaması",
+                project2Desc: "Kullanıcı hesabı, ürün listeleme, sepet yönetimi ve ödeme işlemleri sunan kapsamlı bir e-ticaret platformu.",
+                project3Title: "BTK Akademi Mobil Uygulaması",
+                project3Desc: "BTK Akademi web sitesini mobil ortamda sunan WebView tabanlı uygulama.",
+                project4Title: "Otel Otomasyon Sistemi",
+                project4Desc: "Otel rezervasyon ve yönetim işlemlerini kolaylaştıran kapsamlı bir masaüstü uygulaması.",
+                project5Title: "Note Engineer",
+                project5Desc: "Çoklu platform desteği sunan gelişmiş not alma ve yönetme uygulaması.",
+                project6Title: "Zombie Survival",
+                project6Desc: "Karanlık platformlarda ilerleyerek zombileri öldürdüğümüz, dalga dalga zombilerin geldiği 3D aksiyon oyunu.",
+                project7Title: "Market Otomasyon Sistemi",
+                project7Desc: "Ürün satışı, stok yönetimi ve raporlama özellikleri sunan masaüstü uygulaması.",
+                project8Title: "To-Do Uygulaması",
+                project8Desc: "Görev yönetimi için geliştirilen web uygulaması.",
+                project9Title: "Kitap Takip Uygulaması",
+                project9Desc: "Kullanıcıların kitaplarını ve okuma durumlarını kaydetmelerine olanak sağlayan web uygulaması.",
+                expand: "Genişlet",
+                shrink: "Küçült",
+                details: "Detaylar",
+                review: "İnceleme",
+                github: "GitHub",
+                email: "mmyasocial@gmail.com",
+                location: "Konum: Güngören, İstanbul",
+                aboutP1: "Merhaba! Ben Muhammed Yasin Porduğan. İstanbul Beykent Üniversitesi'nde Bilgisayar Programcılığı bölümünde okuyorum. Web geliştirme, mobil uygulama geliştirme ve oyun programlama konularında tutkulu bir öğrenciyim. Sürekli kendimi geliştiriyor ve yeni teknolojiler öğreniyorum.",
+                aboutP2: "Şu anda bir e-ticaret şirketinde web fullstack ve mobil geliştirme alanlarında staj yapıyorum. Bu deneyim, teorik bilgilerimi pratik uygulamalara dönüştürmeme ve endüstri standartlarını öğrenmeme olanak sağlıyor.",
+                aboutP3: "Geçmişte, kendi e-ticaret girişimimi kurdum ve yönettim. Bu deneyim, bana sadece teknik beceriler değil, aynı zamanda iş dünyası ve girişimcilik konularında da değerli içgörüler kazandırdı.",
+                aboutP4: "Amacım, teknolojinin gücünü kullanarak insanların hayatını kolaylaştıran ve değer katan projeler geliştirmek. Sürekli öğrenmeye ve kendimi geliştirmeye olan tutkum, beni her zaman yeni zorluklara hazır tutuyor.",
+                aboutP5: "Yeni teknolojiler öğrenmeye, zorlu projeler üzerinde çalışmaya ve yazılım geliştirme topluluğuna katkıda bulunmaya her zaman açığım. İşbirliği yapmaktan, fikirler paylaşmaktan ve yazılım dünyasındaki diğer tutkulu insanlarla tanışmaktan büyük keyif alıyorum.",
+                aboutP6: "Şuan öğrendiğim teknolojiler: React Native, Angular, Kotlin, MongoDB"
+            }
+        };
+
+        function changeLanguage(lang) {
+            currentLanguage = lang;
+            document.querySelectorAll('[data-translate]').forEach(element => {
+                const key = element.getAttribute('data-translate');
+                if (translations[lang] && translations[lang][key]) {
+                    element.textContent = translations[lang][key];
+                }
+            });
+            document.querySelectorAll('.expand-btn').forEach(button => {
+                const projectId = button.getAttribute('data-project');
+                const card = button.closest('.project-card');
+                if (card.classList.contains('expanded')) {
+                    button.textContent = translations[lang].shrink;
+                    card.querySelector('.card-text').textContent = projectDetails[lang][projectId].description;
+                } else {
+                    button.textContent = translations[lang].expand;
+                    card.querySelector('.card-text').textContent = translations[lang][projectId + 'Desc'];
+                }
+            });
+        }
+
+        languageSelect.addEventListener('change', function() {
+            changeLanguage(this.value);
+        });
+
+        // İlk yükleme için dili ayarla
+        changeLanguage('tr');
+
+        // Güncellenmiş tıklama efekti kodu
+        document.addEventListener('click', function(e) {
+            // Eğer tıklanan eleman bir buton veya bağlantı değilse efekti uygula
+            if (!e.target.closest('button, a, .project-card, .navbar')) {
+                for (let i = 0; i < 30; i++) {
+                    const particle = document.createElement('div');
+                    particle.className = 'particle';
+                    document.body.appendChild(particle);
+                    
+                    const size = Math.random() * 3 + 2 + 'px';
+                    const color = `hsl(${Math.random() * 360}, 100%, 50%)`;
+                    particle.style.width = size;
+                    particle.style.height = size;
+                    particle.style.backgroundColor = color;
+                    
+                    // Tıklama pozisyonunu doğru şekilde hesapla
+                    const x = e.clientX;
+                    const y = e.clientY;
+                    particle.style.left = x + 'px';
+                    particle.style.top = y + 'px';
+                    
+                    const angle = Math.random() * Math.PI * 2;
+                    const velocity = Math.random() * 100 + 50;
+                    const tx = Math.cos(angle) * velocity;
+                    const ty = Math.sin(angle) * velocity;
+                    particle.style.setProperty('--tx', `${tx}px`);
+                    particle.style.setProperty('--ty', `${ty}px`);
+                    
+                    setTimeout(() => {
+                        particle.remove();
+                    }, 800);
+                }
+            }
+        });
+    </script>
+</body>
+</html>
